@@ -994,6 +994,114 @@ Tab:AddButton(
     }
 )
 
+Tab:AddButton(
+    {
+        Name = "Danger (Vessel)",
+        Callback = function()
+            local tool = Instance.new("Tool")
+            tool.Name = "Danger(Vessel)"
+            tool.RequiresHandle = false
+
+            tool.Activated:Connect(
+                function()
+                    local Anim = Instance.new("Animation")
+                    Anim.AnimationId = "rbxassetid://18500437157"
+                    local k = game:GetService("Players").LocalPlayer.Character.Humanoid:LoadAnimation(Anim)
+                    k:Play()
+                    k:AdjustSpeed(1)
+                    task.wait(1.3)
+                    for i = 1, 25 do
+                        game:GetService("Players").LocalPlayer.Backpack["Divergent Fist"].LocalScript.Event:FireServer()
+                    end
+                end
+            )
+
+            tool.Parent = game.Players.LocalPlayer.Backpack
+        end
+    }
+)
+
+Tab:AddButton(
+    {
+        Name = "Blue Bullets (Gojo)",
+        Callback = function()
+            local tool = Instance.new("Tool")
+            tool.Name = "Blue Bullets(Gojo)"
+            tool.RequiresHandle = false
+
+            tool.Activated:Connect(
+                function()
+                    local Anim = Instance.new("Animation")
+                    Anim.AnimationId = "rbxassetid://18470146243"
+                    local k = game:GetService("Players").LocalPlayer.Character.Humanoid:LoadAnimation(Anim)
+                    k:Play()
+                    k:AdjustSpeed(1)
+                    task.wait(1.3)
+                    for i = 1, 50 do
+                        task.wait()
+                        game:GetService("Players").LocalPlayer.Backpack.Blue.LocalScript.Event:FireServer()
+                    end
+                end
+            )
+
+            tool.Parent = game.Players.LocalPlayer.Backpack
+        end
+    }
+)
+
+Tab:AddButton(
+    {
+        Name = "Many years of experience (Stealth)",
+        Callback = function()
+            local tool = Instance.new("Tool")
+            tool.Name = "Many years of experience(Stealth)"
+            tool.RequiresHandle = false
+
+            tool.Activated:Connect(
+                function()
+                    local Anim = Instance.new("Animation")
+                    Anim.AnimationId = "rbxassetid://17638196124"
+                    local k = game:GetService("Players").LocalPlayer.Character.Humanoid:LoadAnimation(Anim)
+                    k:Play()
+                    k:AdjustSpeed(1)
+                    task.wait(0.8)
+                    k:Stop()
+                    local closestDistance = math.huge
+                    local closestHumanoid = nil
+                    local Usuario = game.Players.LocalPlayer
+
+                    for _, v in pairs(workspace:GetDescendants()) do
+                        if v:IsA("Humanoid") and v.RootPart and v.RootPart.Parent ~= Usuario.Character then
+                            local distance =
+                                (v.RootPart.Position - Usuario.Character.HumanoidRootPart.Position).magnitude
+                            if distance < closestDistance and distance <= 30 then
+                                closestDistance = distance
+                                closestHumanoid = v
+                            end
+                        end
+                    end
+
+                    if closestHumanoid then
+                        local humanoidPosition = closestHumanoid.RootPart
+                        Usuario.Character.HumanoidRootPart.CFrame = humanoidPosition.CFrame * CFrame.new(0, 0, 3)
+                        task.wait(0.1)
+                        game:GetService("ReplicatedStorage").RemotesStealth.Skills.Sung.ShadowDash:FireServer()
+                        for i = 1, 12 do
+                            game:GetService("Players").LocalPlayer.Backpack["WhirlWind Drop"].LocalScript.Event:FireServer(
+
+                            )
+                        end
+                        task.wait(1)
+                        Usuario.Character.HumanoidRootPart.CFrame = humanoidPosition.CFrame * CFrame.new(0, 0, 3)
+                    end
+                end
+            )
+
+            tool.Parent = game.Players.LocalPlayer.Backpack
+        end
+    }
+)
+
 local Tab =
     Window:MakeTab(
     {
