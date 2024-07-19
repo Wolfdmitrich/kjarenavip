@@ -931,6 +931,15 @@ Tab:AddButton(
     }
 )
 
+Tab:AddButton(
+    {
+        Name = "Controlling Panel",
+        Callback = function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/Wolfdmitrich/controlling_panel/main/idk.lua"))()
+        end
+    }
+)
+
 local Tab =
     Window:MakeTab(
     {
