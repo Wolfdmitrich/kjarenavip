@@ -605,7 +605,7 @@ Tab:AddDropdown(
             "King",
             "Six Eyes",
             "Ten Shadows",
-            "The Vessel"
+            "Vessel"
         },
         Callback = function(Value)
             local ohString1 = Value
