@@ -931,6 +931,24 @@ Tab:AddButton(
     }
 )
 
+Tab:AddToggle(
+    {
+        Name = "Homelender",
+        Default = false,
+        Callback = function(Value)
+            if Value then
+                yesquest = true
+                while yesquest do
+                    game:GetService("ReplicatedStorage").RemotesStealth.Skills.Sung.ShadowDash:FireServer()
+                    game.RunService.Stepped:Wait()
+                end
+            else
+                yesquest = false
+            end
+        end
+    }
+)
+
 Tab:AddButton(
     {
         Name = "Controlling Panel",
