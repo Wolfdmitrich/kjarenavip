@@ -941,6 +941,7 @@ Tab:AddButton(
         Name = "Homelander Gun",
         Callback = function()
             local tool = Instance.new("Tool")
+            tool.RequiresHandle = false
             tool.Name = "Homelander mode"
 
             local isEnabled = false
