@@ -1048,7 +1048,7 @@ Tab:AddButton(
         Callback = function()
             local tool = Instance.new("Tool")
             tool.RequiresHandle = false
-            tool.Name = "Fire Bomb"
+            tool.Name = "Fire Bomb ALL"
 
             local function onActivated()
                 -- Получаем сервисы Roblox
@@ -1288,7 +1288,7 @@ Tab:AddButton(
 local Tab =
     Window:MakeTab(
     {
-        Name = "Abilities Stealer",
+        Name = "Cyber Bulling",
         Icon = "rbxassetid://4483345998",
         PremiumOnly = false
     }
@@ -1347,99 +1347,186 @@ Tab:AddTextbox(
     }
 )
 
-local Moveset = nil
+-- local Moveset = nil
 
-Tab:AddDropdown(
+-- Tab:AddDropdown(
+--     {
+--         Name = "Moveset",
+--         Default = "",
+--         Options = {
+--             "KJ",
+--             "Stealth",
+--             "King",
+--             "Six Eyes",
+--             "Ten Shadows",
+--             "The Vessel",
+--             "KJ Awakened",
+--             "Stealth Awakened",
+--             "King Awakened",
+--             "Six Eyes Awakened",
+--             "Ten Shadows Awakened",
+--             "The Vessel Awakened",
+--             "KJ Second Awakening"
+--         },
+--         Callback = function(Value)
+--             Moveset = Value
+--         end
+--     }
+-- )
+
+-- Tab:AddButton(
+--     {
+--         Name = "Steal",
+--         Callback = function()
+--             if Moveset then
+--                 if Moveset == "KJ" then
+--                     local tool = Instance.new("Tool")
+--                     tool.RequiresHandle = false
+--                     tool.Name = "Swift Sweep Kick"
+
+--                     local function onActivated()
+--                         game:GetService("ReplicatedStorage").KJSwift.Remotes["Sweep Swift"]:FireServer()
+--                     end
+
+--                     tool.Activated:Connect(onActivated)
+
+--                     tool.Parent = game.Players.LocalPlayer.Backpack
+
+--                     local tool = Instance.new("Tool")
+--                     tool.RequiresHandle = false
+--                     tool.Name = "Rage Throw"
+
+--                     local function onActivated()
+--                         game:GetService("Players")[playerNametwo].Backpack["Rage Throw"].LocalScript.Event:FireServer()
+--                     end
+
+--                     tool.Activated:Connect(onActivated)
+
+--                     tool.Parent = game.Players.LocalPlayer.Backpack
+
+--                     local tool = Instance.new("Tool")
+--                     tool.RequiresHandle = false
+--                     tool.Name = "Collaretal Ruin"
+
+--                     local function onActivated()
+--                         game:GetService("ReplicatedStorage").Kj.Remotes["Collaretal Ruin"]:FireServer()
+--                     end
+
+--                     tool.Activated:Connect(onActivated)
+
+--                     tool.Parent = game.Players.LocalPlayer.Backpack
+
+--                     local tool = Instance.new("Tool")
+--                     tool.RequiresHandle = false
+--                     tool.Name = "20-20-20 Dropkick"
+
+--                     local function onActivated()
+--                         game:GetService("Players")[playerNametwo].Backpack["20-20-20 DropKick"].LocalScript.Event:FireServer(
+
+--                         )
+--                     end
+
+--                     tool.Activated:Connect(onActivated)
+
+--                     tool.Parent = game.Players.LocalPlayer.Backpack
+--                 end
+--             else
+--                 OrionLib:MakeNotification(
+--                     {
+--                         Name = "Budgie Hub",
+--                         Content = "Select moveset of player!",
+--                         Image = "rbxassetid://4483345998",
+--                         Time = 10
+--                     }
+--                 )
+--             end
+--         end
+--     }
+-- )
+
+local yesOrNo = nil -- Установите начальное значение переменной yesOrNo
+
+Tab:AddButton(
     {
-        Name = "Moveset",
-        Default = "",
-        Options = {
-            "KJ",
-            "Stealth",
-            "King",
-            "Six Eyes",
-            "Ten Shadows",
-            "The Vessel",
-            "KJ Awakened",
-            "Stealth Awakened",
-            "King Awakened",
-            "Six Eyes Awakened",
-            "Ten Shadows Awakened",
-            "The Vessel Awakened",
-            "KJ Second Awakening"
-        },
-        Callback = function(Value)
-            Moveset = Value
+        Name = "Cyberbull",
+        Callback = function()
+            if playerNametwo == nil then
+                OrionLib:MakeNotification(
+                    {
+                        Name = "Budgie Hub",
+                        Content = "Select Player!",
+                        Image = "rbxassetid://4483345998",
+                        Time = 10
+                    }
+                )
+                return
+            end
+            yesOrNo = true
+            local Players = game:GetService("Players")
+            local TeleportService = game:GetService("TeleportService")
+
+            -- Устанавливаем локального игрока
+            local localPlayer = Players.LocalPlayer
+
+            -- Переменная с именем игрока, в которого нужно стрелять
+
+            -- Функция для телепортации к игроку
+            local function teleportToPlayer(targetPlayer)
+                if targetPlayer and targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                    localPlayer.Character.HumanoidRootPart.CFrame = targetPlayer.Character.HumanoidRootPart.CFrame
+
+                    -- Активируем скрипт после телепортации
+                    for i = 1, 15 do
+                        localPlayer.Backpack["Fire Bullet"].aka.Event:FireServer()
+                    end
+                end
+            end
+
+            -- Функция для проверки здоровья игрока
+            local function isPlayerHealthGood(targetPlayer)
+                if targetPlayer and targetPlayer.Character and targetPlayer.Character:FindFirstChild("Humanoid") then
+                    local humanoid = targetPlayer.Character.Humanoid
+                    return humanoid.Health > 0
+                end
+                return false
+            end
+
+            -- Функция для телепортации и стрельбы в указанного игрока, если здоровье позволяет
+            local function teleportToAndShootAtPlayer()
+                local targetPlayer = Players:FindFirstChild(playerNametwo)
+                if targetPlayer then
+                    if isPlayerHealthGood(targetPlayer) then
+                        teleportToPlayer(targetPlayer)
+                    else
+                        warn("Игрок с именем " .. playerNametwo .. " имеет низкое или нулевое здоровье.")
+                    end
+                else
+                    warn("Игрок с именем " .. playerNametwo .. " не найден.")
+                end
+            end
+
+            -- Запускаем функцию телепортации и стрельбы в указанного игрока
+            while yesOrNo do
+                teleportToAndShootAtPlayer()
+                wait(0.2)
+            end
         end
     }
 )
 
 Tab:AddButton(
     {
-        Name = "Steal",
+        Name = "Stop Cyberbull",
         Callback = function()
-            if Moveset then
-                if Moveset == "KJ" then
-                    local tool = Instance.new("Tool")
-                    tool.RequiresHandle = false
-                    tool.Name = "Swift Sweep Kick"
-
-                    local function onActivated()
-                        game:GetService("ReplicatedStorage").KJSwift.Remotes["Sweep Swift"]:FireServer()
-                    end
-
-                    tool.Activated:Connect(onActivated)
-
-                    tool.Parent = game.Players.LocalPlayer.Backpack
-
-                    local tool = Instance.new("Tool")
-                    tool.RequiresHandle = false
-                    tool.Name = "Rage Throw"
-
-                    local function onActivated()
-                        game:GetService("Players")[playerNametwo].Backpack["Rage Throw"].LocalScript.Event:FireServer()
-                    end
-
-                    tool.Activated:Connect(onActivated)
-
-                    tool.Parent = game.Players.LocalPlayer.Backpack
-
-                    local tool = Instance.new("Tool")
-                    tool.RequiresHandle = false
-                    tool.Name = "Collaretal Ruin"
-
-                    local function onActivated()
-                        game:GetService("ReplicatedStorage").Kj.Remotes["Collaretal Ruin"]:FireServer()
-                    end
-
-                    tool.Activated:Connect(onActivated)
-
-                    tool.Parent = game.Players.LocalPlayer.Backpack
-
-                    local tool = Instance.new("Tool")
-                    tool.RequiresHandle = false
-                    tool.Name = "20-20-20 Dropkick"
-
-                    local function onActivated()
-                        game:GetService("Players")[playerNametwo].Backpack["20-20-20 DropKick"].LocalScript.Event:FireServer(
-
-                        )
-                    end
-
-                    tool.Activated:Connect(onActivated)
-
-                    tool.Parent = game.Players.LocalPlayer.Backpack
-                end
-            else
-                OrionLib:MakeNotification(
-                    {
-                        Name = "Budgie Hub",
-                        Content = "Select moveset of player!",
-                        Image = "rbxassetid://4483345998",
-                        Time = 10
-                    }
-                )
-            end
+            yesOrNo = false
+            OrionLib:MakeNotification(
+                {
+                    Name = "Budgie Hub",
+                    Content = "Cyber Bulling Disabled",
+                    Image = "rbxassetid://4483345998",
+                    Time = 10
+                }
+            )
         end
     }
 )
