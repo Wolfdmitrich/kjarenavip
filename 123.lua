@@ -1091,11 +1091,19 @@ Tab:AddButton(
             tool.RequiresHandle = false
             tool.Name = "Frog Hell"
 
+            local isEnabled = false
+
             local function onActivated()
-                for i = 1, 10 do
-                    for i = 1, 15 do
-                        game:GetService("ReplicatedStorage").megumi.Remotes.toad:FireServer()
-                    end
+                isEnabled = not isEnabled
+                tool.ToolTip = "Withering look, Status: " .. tostring(isEnabled)
+
+                if not isEnabled then
+                    return
+                end
+
+                while isEnabled do
+                    game:GetService("ReplicatedStorage").megumi.Remotes.toad:FireServer()
+                    game.RunService.Stepped:Wait()
                 end
             end
 
