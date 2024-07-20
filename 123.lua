@@ -1043,6 +1043,58 @@ Tab:AddButton(
 
 Tab:AddButton(
     {
+        Name = "Fire Bomb ALL (King)",
+        Callback = function()
+            local tool = Instance.new("Tool")
+            tool.RequiresHandle = false
+            tool.Name = "Fire Bomb"
+
+            local function onActivated()
+                -- Получаем сервисы Roblox
+                local Players = game:GetService("Players")
+                local TeleportService = game:GetService("TeleportService")
+
+                -- Устанавливаем локального игрока
+                local localPlayer = Players.LocalPlayer
+
+                -- Функция для телепортации к игроку
+                local function teleportToPlayer(targetPlayer)
+                    if
+                        targetPlayer and targetPlayer.Character and
+                            targetPlayer.Character:FindFirstChild("HumanoidRootPart")
+                     then
+                        localPlayer.Character.HumanoidRootPart.CFrame = targetPlayer.Character.HumanoidRootPart.CFrame
+
+                        -- Активируем скрипт после телепортации
+                        for i = 1, 15 do
+                            localPlayer.Backpack["Fire Bullet"].aka.Event:FireServer()
+                        end
+                    end
+                end
+
+                -- Функция для телепортации ко всем игрокам
+                local function teleportToAllPlayers()
+                    for _, player in pairs(Players:GetPlayers()) do
+                        if player ~= localPlayer then
+                            teleportToPlayer(player)
+                            wait(1.5) -- Задержка 250 миллисекунд перед следующим телепортом
+                        end
+                    end
+                end
+
+                -- Запускаем функцию телепортации ко всем игрокам
+                teleportToAllPlayers()
+            end
+
+            tool.Activated:Connect(onActivated)
+
+            tool.Parent = game.Players.LocalPlayer.Backpack
+        end
+    }
+)
+
+Tab:AddButton(
+    {
         Name = "The Strongest Kick",
         Callback = function()
             local tool = Instance.new("Tool")
