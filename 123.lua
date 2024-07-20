@@ -936,6 +936,9 @@ Tab:AddButton(
         end
     }
 )
+
+local isEnabled = nil
+
 Tab:AddButton(
     {
         Name = "Homelander Gun",
@@ -944,7 +947,7 @@ Tab:AddButton(
             tool.RequiresHandle = false
             tool.Name = "Homelander mode"
 
-            local isEnabled = false
+            isEnabled = false
 
             local function onActivated()
                 isEnabled = not isEnabled
@@ -967,6 +970,8 @@ Tab:AddButton(
     }
 )
 
+local yesquest = nil
+
 Tab:AddToggle(
     {
         Name = "Homelender",
@@ -981,6 +986,17 @@ Tab:AddToggle(
             else
                 yesquest = false
             end
+        end
+    }
+)
+
+Tab:AddToggle(
+    {
+        Name = "DISABLE ALL HOMELENDER",
+        Default = false,
+        Callback = function(Value)
+            yesquest = false
+            isEnabled = false
         end
     }
 )
