@@ -1089,7 +1089,7 @@ Tab:AddButton(
         Callback = function()
             local tool = Instance.new("Tool")
             tool.RequiresHandle = false
-            tool.Name = "The Strongest Ruin"
+            tool.Name = "Frog Hell"
 
             local function onActivated()
                 for i = 1, 10 do
