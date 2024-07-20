@@ -941,7 +941,6 @@ Tab:AddButton(
         Name = "Homelander Gun",
         Callback = function()
             local tool = Instance.new("Tool")
-            tool.RequiresHandle = false
             tool.Name = "Homelander mode"
 
             local isEnabled = false
@@ -1074,6 +1073,29 @@ Tab:AddButton(
             local function onActivated()
                 for i = 1, 10 do
                     game:GetService("ReplicatedStorage").Kj.Remotes["Collaretal Ruin"]:FireServer()
+                end
+            end
+
+            tool.Activated:Connect(onActivated)
+
+            tool.Parent = game.Players.LocalPlayer.Backpack
+        end
+    }
+)
+
+Tab:AddButton(
+    {
+        Name = "Frog Hell",
+        Callback = function()
+            local tool = Instance.new("Tool")
+            tool.RequiresHandle = false
+            tool.Name = "The Strongest Ruin"
+
+            local function onActivated()
+                for i = 1, 10 do
+                    for i = 1, 15 do
+                        game:GetService("ReplicatedStorage").megumi.Remotes.toad:FireServer()
+                    end
                 end
             end
 
