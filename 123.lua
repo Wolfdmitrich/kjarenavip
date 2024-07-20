@@ -1105,6 +1105,222 @@ Tab:AddButton(
 local Tab =
     Window:MakeTab(
     {
+        Name = "Abilities Stealer",
+        Icon = "rbxassetid://4483345998",
+        PremiumOnly = false
+    }
+)
+
+local playerNametwo = nil
+local playerNames = {}
+local playerDropdown
+local players = game:GetService("Players")
+
+local function updatePlayerNames()
+    playerNames = {}
+    for _, player in pairs(players:GetPlayers()) do
+        table.insert(playerNames, player.Name)
+    end
+    if playerDropdown then
+        playerDropdown:Refresh(playerNames, true)
+    end
+end
+
+playerDropdown =
+    Tab:AddDropdown(
+    {
+        Name = "Players",
+        Default = "Select player",
+        Options = playerNames,
+        Callback = function(PlayerUsername)
+            playerNametwo = PlayerUsername
+        end
+    }
+)
+
+local inputPlayerName
+Tab:AddTextbox(
+    {
+        Name = "Player Name",
+        Default = "",
+        TextDisappear = false,
+        Callback = function(Value)
+            inputPlayerName = Value
+            for _, player in pairs(players:GetPlayers()) do
+                if string.find(string.lower(player.Name), string.lower(inputPlayerName)) then
+                    playerNametwo = player.Name
+                    OrionLib:MakeNotification(
+                        {
+                            Name = "Player Found",
+                            Content = "Player " .. playerNametwo .. " selected.",
+                            Image = "rbxassetid://4483345998",
+                            Time = 5
+                        }
+                    )
+                    break
+                end
+            end
+        end
+    }
+)
+
+local Moveset = nil
+
+Tab:AddDropdown(
+    {
+        Name = "Moveset",
+        Default = "",
+        Options = {
+            "KJ",
+            "Stealth",
+            "King",
+            "Six Eyes",
+            "Ten Shadows",
+            "The Vessel",
+            "KJ Awakened",
+            "Stealth Awakened",
+            "King Awakened",
+            "Six Eyes Awakened",
+            "Ten Shadows Awakened",
+            "The Vessel Awakened",
+            "KJ Second Awakening"
+        },
+        Callback = function(Value)
+            Moveset = Value
+        end
+    }
+)
+
+Tab:AddButton(
+    {
+        Name = "Steal",
+        Callback = function()
+            if Moveset then
+                if Moveset == "KJ" then
+                    local tool = Instance.new("Tool")
+                    tool.RequiresHandle = false
+                    tool.Name = "Swift Sweep Kick"
+
+                    local function onActivated()
+                        game:GetService("ReplicatedStorage").KJSwift.Remotes["Sweep Swift"]:FireServer()
+                    end
+
+                    tool.Activated:Connect(onActivated)
+
+                    tool.Parent = game.Players.LocalPlayer.Backpack
+
+                    local tool = Instance.new("Tool")
+                    tool.RequiresHandle = false
+                    tool.Name = "Rage Throw"
+
+                    local function onActivated()
+                        game:GetService("Players")[playerNametwo].Backpack["Rage Throw"].LocalScript.Event:FireServer()
+                    end
+
+                    tool.Activated:Connect(onActivated)
+
+                    tool.Parent = game.Players.LocalPlayer.Backpack
+
+                    local tool = Instance.new("Tool")
+                    tool.RequiresHandle = false
+                    tool.Name = "Collaretal Ruin"
+
+                    local function onActivated()
+                        game:GetService("ReplicatedStorage").Kj.Remotes["Collaretal Ruin"]:FireServer()
+                    end
+
+                    tool.Activated:Connect(onActivated)
+
+                    tool.Parent = game.Players.LocalPlayer.Backpack
+
+                    local tool = Instance.new("Tool")
+                    tool.RequiresHandle = false
+                    tool.Name = "20-20-20 Dropkick"
+
+                    local function onActivated()
+                        game:GetService("Players")[playerNametwo].Backpack["20-20-20 DropKick"].LocalScript.Event:FireServer(
+
+                        )
+                    end
+
+                    tool.Activated:Connect(onActivated)
+
+                    tool.Parent = game.Players.LocalPlayer.Backpack
+                end
+            else
+                OrionLib:MakeNotification(
+                    {
+                        Name = "Budgie Hub",
+                        Content = "Select moveset of player!",
+                        Image = "rbxassetid://4483345998",
+                        Time = 10
+                    }
+                )
+            end
+        end
+    }
+)
+
+local Tab =
+    Window:MakeTab(
+    {
+        Name = "Server",
+        Icon = "rbxassetid://4483345998",
+        PremiumOnly = false
+    }
+)
+
+Tab:AddButton(
+    {
+        Name = "Rejoin",
+        Callback = function()
+            -- Script для повторного присоединения локального игрока к текущему серверу в Roblox
+
+            -- Получаем объект TeleportService
+            local TeleportService = game:GetService("TeleportService")
+
+            -- ID текущего плейса
+            local placeId = game.PlaceId
+
+            -- Функция для повторного присоединения к текущему серверу
+            local function rejoinServer()
+                -- Перемещаем игрока на текущий placeId
+                TeleportService:Teleport(placeId)
+            end
+
+            -- Ждем, когда локальный игрок загрузится
+            game.Players.PlayerAdded:Connect(
+                function(player)
+                    -- Повторное присоединение локального игрока
+                    if player == game.Players.LocalPlayer then
+                        rejoinServer()
+                    end
+                end
+            )
+
+            -- Для безопасности проверяем также текущего локального игрока
+            if game.Players.LocalPlayer then
+                rejoinServer()
+            end
+        end
+    }
+)
+
+Tab:AddButton(
+    {
+        Name = "Serverhop",
+        Callback = function()
+            local module =
+                loadstring(game:HttpGet "https://raw.githubusercontent.com/LeoKholYt/roblox/main/lk_serverhop.lua")()
+
+            module:Teleport(game.PlaceId)
+        end
+    }
+)
+
+local Tab =
+    Window:MakeTab(
+    {
         Name = "Creators",
         Icon = "rbxassetid://4483345998",
         PremiumOnly = false
@@ -1147,6 +1363,20 @@ local function DS()
 end
 
 DS()
+
+updatePlayerNames()
+
+players.PlayerAdded:Connect(
+    function(player)
+        updatePlayerNames()
+    end
+)
+
+players.PlayerRemoving:Connect(
+    function(player)
+        updatePlayerNames()
+    end
+)
 
 OrionLib:MakeNotification(
     {
