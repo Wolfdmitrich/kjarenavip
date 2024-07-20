@@ -1023,6 +1023,106 @@ Tab:AddButton(
 
 Tab:AddButton(
     {
+        Name = "Fire Bomb (King)",
+        Callback = function()
+            local tool = Instance.new("Tool")
+            tool.RequiresHandle = false
+            tool.Name = "Fire Bomb"
+
+            local function onActivated()
+                for i = 1, 15 do
+                    game:GetService("Players").LocalPlayer.Backpack["Fire Bullet"].aka.Event:FireServer()
+                end
+            end
+
+            tool.Activated:Connect(onActivated)
+
+            tool.Parent = game.Players.LocalPlayer.Backpack
+        end
+    }
+)
+
+Tab:AddButton(
+    {
+        Name = "The Strongest Kick",
+        Callback = function()
+            local tool = Instance.new("Tool")
+            tool.RequiresHandle = false
+            tool.Name = "The Strongest Kick"
+
+            local function onActivated()
+                for i = 1, 10 do
+                    game:GetService("ReplicatedStorage").KJSwift.Remotes["Sweep Swift"]:FireServer()
+                end
+            end
+
+            tool.Activated:Connect(onActivated)
+
+            tool.Parent = game.Players.LocalPlayer.Backpack
+        end
+    }
+)
+
+Tab:AddButton(
+    {
+        Name = "The Strongest Ruin",
+        Callback = function()
+            local tool = Instance.new("Tool")
+            tool.RequiresHandle = false
+            tool.Name = "The Strongest Ruin"
+
+            local function onActivated()
+                for i = 1, 10 do
+                    game:GetService("ReplicatedStorage").Kj.Remotes["Collaretal Ruin"]:FireServer()
+                end
+            end
+
+            tool.Activated:Connect(onActivated)
+
+            tool.Parent = game.Players.LocalPlayer.Backpack
+        end
+    }
+)
+
+Tab:AddButton(
+    {
+        Name = "Mahito Hell",
+        Callback = function()
+            local tool = Instance.new("Tool")
+            tool.RequiresHandle = false
+            tool.Name = "Mahito Hell"
+
+            local function onActivated()
+                local Players = game:GetService("Players")
+                local ReplicatedStorage = game:GetService("ReplicatedStorage")
+                local TeleportInterval = 0.25 -- 250 миллисекунд
+
+                local function teleportToPlayers(player)
+                    for _, targetPlayer in pairs(Players:GetPlayers()) do
+                        if targetPlayer ~= player then
+                            player.Character:MoveTo(targetPlayer.Character.PrimaryPart.Position)
+                            ReplicatedStorage.MahitoDomainExpansion.MahitoDomainEvent:FireServer()
+                            wait(TeleportInterval)
+                        end
+                    end
+                end
+
+                -- Получение локального игрока (предполагается, что скрипт находится в LocalScript)
+                local localPlayer = Players.LocalPlayer
+
+                -- Начинаем телепортировать ко всем игрокам
+                teleportToPlayers(localPlayer)
+            end
+
+            tool.Activated:Connect(onActivated)
+
+            tool.Parent = game.Players.LocalPlayer.Backpack
+        end
+    }
+)
+
+Tab:AddButton(
+    {
         Name = "Blue Bullets (Gojo)",
         Callback = function()
             local tool = Instance.new("Tool")
